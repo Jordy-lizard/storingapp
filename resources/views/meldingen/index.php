@@ -1,4 +1,15 @@
+<?php
+session_start();
+if(!isset($_SESSION['user_id']))
+{
+    $msg= "Je moet eerst inloggen!";
+    header("Location: " . $base_url . "/resources/views/meldingen/login.php?msg=$msg");
+    exit;
+}
+?>
+
 <?php require_once __DIR__ . '/../../../config/config.php'; ?>
+
 <!doctype html>
 <html lang="nl">
 

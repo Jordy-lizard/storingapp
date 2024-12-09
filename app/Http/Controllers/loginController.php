@@ -5,7 +5,7 @@ session_start();
 $username = $_POST['username'];
 $password = $_POST['password'];
 
-require_once 'conn.php';
+require_once '../../../config/conn.php';
 
 $query = "SELECT * FROM users WHERE username=:username";
 
@@ -27,4 +27,4 @@ if (!password_verify($password, $user['password'])) {
 
 $_SESSION['user_id'] = $user['id'];
 
-header("Location: " . $base_url . "/resources/views/meldingen/index.php?msg=ingelogd")
+header("Location: " . $base_url . "/index.php?msg=ingelogd");

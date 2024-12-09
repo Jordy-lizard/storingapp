@@ -1,32 +1,32 @@
 <!doctype html>
 <html lang="nl">
-
+<?php
+session_start();
+if(!isset($_SESSION['user_id']))
+{
+    $msg= "Je moet eerst inloggen!";
+    header("Location: " . $base_url . "/resources/views/meldingen/login.php?msg=$msg");
+    exit;
+}
+?>
 <head>
     <title>StoringApp / Meldingen / Aanpassen</title>
     <?php require_once '../components/head.php'; ?>
 </head>
-
 <body>
     <?php
-
     if (!isset($_GET['id'])) {
         echo "Geef in je aanpaslink op de index.php het id van betreffende item mee achter de URL in je a-element om deze pagina werkend te krijgen na invoer van je vijfstappenplan";
         exit;
-
     }
     ?>
     <?php
     require_once '../components/header.php'; ?>
-
     <div class="container">
         <h1>Melding aanpassen</h1>
-
         <?php
         //Haal het id uit de URL:
-        
-
         $id = $_GET['id'];
-
         //1. Haal de verbinding erbij
         //...........
         require_once '../../../config/conn.php';
@@ -40,18 +40,13 @@
         $statement->execute([
             ":id" => $id
         ]);
-
         //5. Ophalen gegevens, tip: gebruik hier fetch().
-        
         $melding = $statement->fetch(PDO::FETCH_ASSOC);
         ?>
-
         <form action="../../../app/Http/Controllers/meldingenController.php" method="POST">
             <!-- (voeg hier opdracht 7 toe) -->
             <input type="hidden" name="action" value="update">
             <input type="hidden" name="id" value="<?php echo $id; ?>">
-
-
             <div class="form-group">
                 <label>Naam attractie:</label>
                 <input type="text" name="attractie" id="attractie" class="form-input"
@@ -70,7 +65,6 @@
                     <option value="Water">water</option>
                     <option value="Overig">overig</option>
                 </select>
-
             </div>
             <div class="form-group">
                 <label for="capaciteit">Capaciteit p/uur:</label>
@@ -101,8 +95,6 @@
             <input type="hidden" name="action" value="delete">
             <input type="hidden" name="id" value="<?php echo $id; ?>">
             <input type="submit" value="Verwijderen" onclick="return confirm('Weet u zeker dat u deze melding wilt verwijderen?');">
-        
-
         </form>
     </div>
 

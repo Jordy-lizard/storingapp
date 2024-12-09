@@ -1,7 +1,15 @@
 <?php require_once __DIR__.'/../../../config/config.php'; ?>
 <!doctype html>
 <html lang="nl">
-
+<?php
+session_start();
+if(!isset($_SESSION['user_id']))
+{
+    $msg= "Je moet eerst inloggen!";
+    header("Location: " . $base_url . "/resources/views/meldingen/login.php?msg=$msg");
+    exit;
+}
+?>
 <head>
     <title>StoringApp / Meldingen / Nieuw</title>
     <?php require_once __DIR__.'/../components/head.php'; ?>
